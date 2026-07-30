@@ -1,0 +1,798 @@
+.device {
+	background: #d64545;
+	border: 4px solid #a83232;
+	border-radius: 16px 32px 16px 16px;
+	padding: 16px;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.device-closed {
+	width: 420px;
+	height: 640px;
+	cursor: pointer;
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	padding-bottom: 48px;
+}
+
+.device-closed:hover {
+	filter: brightness(1.05);
+}
+
+.device-closed .device-top {
+	position: absolute;
+	top: 24px;
+	left: 24px;
+	margin-bottom: 0;
+}
+
+.device-closed-hint {
+	color: white;
+	font-size: 20px;
+	opacity: 0.9;
+}
+
+.device-book {
+	display: flex;
+}
+
+.device-book--closing {
+	perspective: 1600px;
+}
+
+.device-book--open .device-page {
+	animation: page-settle 0.4s ease-out;
+}
+
+@keyframes page-settle {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.device-closed {
+	transform-origin: left center;
+	transform-style: preserve-3d;
+	transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1);
+	position: relative;
+	z-index: 2;
+}
+
+.device-closed.opening {
+	transform: rotateY(-150deg);
+}
+
+.device-page--reveal {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+}
+
+
+.device-panel--preview {
+	align-items: center;
+	justify-content: center;
+	opacity: 0.6;
+}
+
+.device-page {
+	width: 420px;
+	height: 640px;
+	display: flex;
+	flex-direction: column;
+}
+
+.device-page--left {
+	border-radius: 16px 0 0 16px;
+	border-right: none;
+}
+
+.device-page--right {
+	border-radius: 0 32px 16px 0;
+	border-left: 2px solid #a83232;
+}
+
+.device-top {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 16px;
+}
+
+.device-lens-big {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: #4fa3e3;
+	border: 4px solid #eee;
+	box-shadow: inset 0 -4px 6px rgba(0, 0, 0, 0.3), 0 0 0 2px #a83232;
+}
+
+.device-lens-small {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+}
+
+.device-lens-small--blue {
+	background: #3b6ea5;
+}
+
+.device-lens-small--red {
+	background: #e04b4b;
+}
+
+.device-lens-small--yellow {
+	background: #e8c93b;
+}
+
+/* PANELS (open state) */
+
+.device-panel {
+	background: #2b2b2b;
+	border-radius: 8px;
+	padding: 12px;
+}
+
+/* LIST PANEL: 3-COLUMN SPRITE GRID */
+
+.device-panel--list {
+	flex: 1;
+	min-height: 0;
+	width: 100%;
+
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.device-search {
+	width: 100%;
+	padding: 8px 12px;
+	border-radius: 4px;
+	background: #e8f4e8;
+	color: #2b2b2b;
+	font-size: 14px;
+	cursor: text;
+}
+
+.device-search::placeholder {
+	color: #667a66;
+}
+
+.device-pokemon-list {
+	list-style: none;
+	flex: 1;
+	min-height: 0;
+	overflow-y: auto;
+
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-auto-rows: min-content;
+	gap: 8px;
+
+	background: #e8f4e8;
+	border-radius: 4px;
+	padding: 8px;
+}
+
+.device-pokemon-list-loading {
+	grid-column: 1 / -1;
+	text-align: center;
+	font-size: 12px;
+	color: #667a66;
+	padding: 8px 0;
+}
+
+.device-pokemon-list-item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	aspect-ratio: 1;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.device-pokemon-list-sprite {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	image-rendering: pixelated;
+}
+
+.device-pokemon-list-item:hover {
+	background: #d5ecd5;
+}
+
+.device-pokemon-list-item.selected {
+	background: #663399;
+}
+
+/* INFO PANEL: THUMBNAIL + DATASHEET */
+
+.device-panel--info {
+	flex: 1;
+	min-height: 0;
+	background: #e8f4e8;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	overflow-y: auto;
+}
+
+.device-empty-hint {
+	margin: auto;
+	color: #667a66;
+	font-size: 14px;
+}
+
+.device-thumbnail {
+	position: relative;
+	width: 100%;
+	height: 260px;
+	flex-shrink: 0;
+	background: #2b2b2b;
+	border-radius: 6px;
+	overflow: hidden;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.device-thumbnail-controls {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	right: 8px;
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.device-view-toggle {
+	display: flex;
+	gap: 4px;
+}
+
+.device-shiny-toggle {
+	padding: 4px 10px;
+	border-radius: 4px;
+	background: rgba(255, 255, 255, 0.15);
+	color: white;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.device-shiny-toggle.active {
+	background: #f7d02c;
+	color: #2b2b2b;
+}
+
+.device-view-toggle-button {
+	padding: 4px 10px;
+	border-radius: 4px;
+	background: rgba(255, 255, 255, 0.15);
+	color: white;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.device-view-toggle-button.active {
+	background: #f7d02c;
+	color: #2b2b2b;
+}
+
+.device-thumbnail-model {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.device-thumbnail-sprite {
+	width: 60%;
+	image-rendering: pixelated;
+}
+
+/* DATASHEET */
+
+.device-datasheet {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.device-datasheet-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+}
+
+.device-pokemon-name {
+	text-transform: capitalize;
+	font-size: 18px;
+	font-weight: bold;
+	color: #2b2b2b;
+}
+
+.device-pokemon-id {
+	font-size: 13px;
+	color: #667a66;
+}
+
+.device-moves-button {
+	padding: 4px 10px;
+	border-radius: 4px;
+	background: #663399;
+	color: white;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.device-moves-button:hover {
+	background: #4e2479;
+}
+
+/* LOCATIONS */
+
+.device-locations {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.device-location-group {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.device-location-version {
+	font-size: 12px;
+	font-weight: bold;
+	text-transform: capitalize;
+	color: #2b2b2b;
+}
+
+.device-location-row {
+	background: white;
+	border-radius: 4px;
+	padding: 6px 10px;
+	font-size: 12px;
+	text-transform: capitalize;
+	color: #2b2b2b;
+}
+
+/* MOVES SCREEN */
+
+.device-moves-screen {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	height: 100%;
+	min-height: 0;
+}
+
+.device-moves-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.device-back-button {
+	padding: 4px 10px;
+	border-radius: 4px;
+	background: #663399;
+	color: white;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.device-back-button:hover {
+	background: #4e2479;
+}
+
+.device-version-select {
+	width: 100%;
+	padding: 8px 10px;
+	border-radius: 4px;
+	background: white;
+	color: #2b2b2b;
+	font-size: 13px;
+	text-transform: capitalize;
+	cursor: pointer;
+}
+
+.device-method-filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.device-method-filter-button {
+	padding: 4px 10px;
+	border-radius: 4px;
+	background: white;
+	color: #2b2b2b;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.device-method-filter-button.active {
+	background: #663399;
+	color: white;
+}
+
+.device-moves-list {
+	list-style: none;
+	flex: 1;
+	min-height: 0;
+	overflow-y: auto;
+
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.device-move-item {
+	display: flex;
+	flex-direction: column;
+}
+
+.device-move-row {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: white;
+	border-radius: 4px;
+	padding: 6px 10px;
+	cursor: pointer;
+}
+
+.device-move-detail {
+	background: #d5ecd5;
+	border-radius: 0 0 4px 4px;
+	padding: 6px 10px;
+	margin-top: -2px;
+}
+
+.device-move-detail-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+	font-size: 11px;
+	color: #2b2b2b;
+	text-transform: capitalize;
+}
+
+.device-move-detail-type {
+	padding: 2px 6px;
+	border-radius: 4px;
+	color: white;
+}
+
+.device-move-name {
+	font-size: 12px;
+	text-transform: capitalize;
+	color: #2b2b2b;
+}
+
+.device-move-method {
+	font-size: 11px;
+	text-transform: capitalize;
+	color: #667a66;
+}
+
+.device-genus {
+	font-size: 12px;
+	color: #667a66;
+	margin-top: -6px;
+}
+
+.device-variety-select {
+	width: 100%;
+	padding: 6px 10px;
+	border-radius: 4px;
+	background: white;
+	color: #2b2b2b;
+	font-size: 12px;
+	text-transform: capitalize;
+	cursor: pointer;
+}
+
+.device-types {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.device-type {
+	padding: 4px 8px;
+	border-radius: 4px;
+	color: white;
+	text-transform: capitalize;
+	font-size: 13px;
+}
+
+.device-badges {
+	display: flex;
+	gap: 4px;
+}
+
+.device-badge {
+	padding: 3px 8px;
+	border-radius: 4px;
+	font-size: 11px;
+	font-weight: bold;
+	color: #2b2b2b;
+}
+
+.device-badge--legendary {
+	background: #f7d02c;
+}
+
+.device-badge--mythical {
+	background: #f95587;
+	color: white;
+}
+
+.device-egg-groups {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.device-flavor-text {
+	font-size: 12px;
+	line-height: 1.4;
+	color: #2b2b2b;
+	font-style: italic;
+}
+
+.device-metric-value--small {
+	font-size: 11px;
+}
+
+/* WEAKNESSES */
+
+.device-weaknesses {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.device-weakness-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.device-weakness-cube {
+	width: 44px;
+	height: 44px;
+	border-radius: 6px;
+	color: white;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 2px;
+}
+
+.device-weakness-cube-type {
+	font-size: 10px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.device-weakness-cube-multiplier {
+	font-size: 10px;
+}
+
+/* EVOLUTION CHAIN */
+
+.device-evolution {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.device-evolution-chain {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	overflow-x: auto;
+	padding: 4px 0;
+}
+
+.device-evolution-stage-group {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	flex-shrink: 0;
+}
+
+.device-evolution-stage {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.device-evolution-sprite-button {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2px;
+	background: white;
+	border-radius: 6px;
+	padding: 4px;
+	cursor: pointer;
+}
+
+.device-evolution-sprite-button.active {
+	background: #663399;
+}
+
+.device-evolution-sprite-button.active .device-evolution-name {
+	color: white;
+}
+
+.device-evolution-sprite {
+	width: 48px;
+	height: 48px;
+	image-rendering: pixelated;
+}
+
+.device-evolution-sprite-skeleton {
+	width: 48px;
+	height: 48px;
+	border-radius: 4px;
+	background: #e8f4e8;
+	animation: sprite-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes sprite-pulse {
+	0%,
+	100% {
+		opacity: 0.4;
+	}
+	50% {
+		opacity: 0.9;
+	}
+}
+
+.device-evolution-sprite-error {
+	width: 48px;
+	height: 48px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	font-size: 9px;
+	color: #a83232;
+	line-height: 1.1;
+}
+
+.device-evolution-name {
+	font-size: 10px;
+	text-transform: capitalize;
+	color: #2b2b2b;
+}
+
+.device-evolution-arrow {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2px;
+	font-size: 16px;
+	color: #667a66;
+	flex-shrink: 0;
+}
+
+.device-evolution-condition {
+	font-size: 12px;
+	font-weight: bold;
+	text-transform: capitalize;
+	white-space: nowrap;
+}
+
+.device-section-label {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: #667a66;
+	margin-bottom: 4px;
+}
+
+.device-metrics {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 8px;
+}
+
+.device-metric {
+	background: white;
+	border-radius: 4px;
+	padding: 6px 10px;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.device-metric-label {
+	font-size: 11px;
+	color: #667a66;
+}
+
+.device-metric-value {
+	font-size: 14px;
+	color: #2b2b2b;
+	font-weight: bold;
+}
+
+.device-abilities-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.device-ability {
+	background: white;
+	border-radius: 4px;
+	padding: 3px 8px;
+	font-size: 12px;
+	text-transform: capitalize;
+	color: #2b2b2b;
+}
+
+.device-stats {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.device-stat-row {
+	display: grid;
+	grid-template-columns: 90px 28px 1fr;
+	align-items: center;
+	gap: 6px;
+}
+
+.device-stat-name {
+	font-size: 12px;
+	text-transform: capitalize;
+	color: #2b2b2b;
+}
+
+.device-stat-value {
+	font-size: 12px;
+	font-weight: bold;
+	color: #2b2b2b;
+	text-align: right;
+}
+
+.device-stat-bar {
+	height: 6px;
+	background: white;
+	border-radius: 3px;
+	overflow: hidden;
+}
+
+.device-stat-bar-fill {
+	height: 100%;
+	background: #663399;
+	border-radius: 3px;
+}
