@@ -1,0 +1,39 @@
+/* RESET */
+
+*, html, body, button, input, textarea{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    background: none;
+    line-height: 1;
+}
+
+/* BODY */
+
+body {
+	background: #f0f2f5;
+}
+
+/* WRAPPER */
+
+.wrapper {
+	max-width: 1024px;
+	min-height: 100vh;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	width: 100%;
+	margin: 48px auto;
+}
+
+/* FOOTER */
+
+footer {
+	margin-top: 32px;
+	opacity: 0.7;
+	font-size: 14px;
+}
