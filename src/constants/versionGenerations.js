@@ -41,3 +41,7 @@ export const versionGeneration = {
 export function getVersionGeneration(versionName) {
 	return versionGeneration[versionName] ?? 99
 }
+
+export const gameOptions = Object.keys(versionGeneration).sort(
+	(a, b) => versionGeneration[a] - versionGeneration[b] || a.localeCompare(b)
+)
