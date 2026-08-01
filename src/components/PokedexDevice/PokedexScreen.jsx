@@ -5,6 +5,7 @@ import { useMoveDetails } from "../../hooks/useMoveDetails"
 import { useGamePokedex } from "../../hooks/useGamePokedex"
 import { useGameFilteredPokemons } from "../../hooks/useGameFilteredPokemons"
 import { getGenerationSprite } from "../../constants/spriteVersions"
+import { useMobileMasterDetail } from "../../hooks/useMobileMasterDetail"
 import { PokemonDatasheet } from "./PokemonDatasheet"
 import { FilterModal } from "./FilterModal"
 
@@ -56,6 +57,8 @@ export function PokedexScreen({
 	}, [baseList, typeFilter1, typeFilter2])
 
 	const activeFilterCount = (gameFilter ? 1 : 0) + (typeFilter1 ? 1 : 0) + (typeFilter2 ? 1 : 0)
+
+	const { isMobile, dataView, goToDetail, goToList } = useMobileMasterDetail()
 
 	const { moveDetails, loadMoveDetail } = useMoveDetails()
 
@@ -132,7 +135,7 @@ export function PokedexScreen({
 	}
 
 	return (
-		<>
+		<div className="device-book device-book--open" data-view={dataView}>
 			<div className="device device-page device-page--left">
 				<div className="device-top">
 					<div className="device-lens-big" />
@@ -169,7 +172,10 @@ export function PokedexScreen({
 								className={`device-pokemon-list-item${
 									pokemon.id === selectedPokemon?.id ? " selected" : ""
 								}`}
-								onClick={() => onSelect(pokemon)}
+								onClick={() => {
+									onSelect(pokemon)
+									goToDetail()
+								}}
 							>
 								<img
 									src={getGenerationSprite(pokemon, spriteGame, { useOriginGeneration })}
@@ -211,6 +217,16 @@ export function PokedexScreen({
 			</div>
 
 			<div className="device device-page device-page--right">
+				{isMobile && (
+					<div className="device-mobile-detail-nav">
+						<button className="device-back-button device-back-to-list" onClick={goToList}>
+							← Voltar
+						</button>
+						<button className="device-back-to-menu" onClick={onBackToMenu}>
+							Menu
+						</button>
+					</div>
+				)}
 				<div className="device-panel device-panel--info">
 					{!selectedPokemon ? (
 						<p className="device-empty-hint">Selecione um pokémon</p>
@@ -331,6 +347,6 @@ export function PokedexScreen({
 					)}
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }

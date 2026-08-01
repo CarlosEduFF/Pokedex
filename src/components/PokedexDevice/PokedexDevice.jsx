@@ -104,7 +104,7 @@ export function PokedexDevice({
 	}
 
 	return (
-		<div className="device-book device-book--open">
+		<>
 			{menuScreen === "team" ? (
 				<TeamBuilderScreen
 					pokemonRefs={pokemonRefs}
@@ -178,6 +178,6 @@ export function PokedexDevice({
 					onBackToMenu={handleClose}
 				/>
 			)}
-		</div>
+		</>
 	)
 }

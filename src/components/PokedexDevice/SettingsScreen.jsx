@@ -10,7 +10,7 @@ export function SettingsScreen({
 	onBackToMenu,
 }) {
 	return (
-		<>
+		<div className="device-book device-book--open device-book--stacked">
 			<div className="device device-page device-page--left">
 				<div className="device-top">
 					<div className="device-lens-big" />
@@ -103,6 +103,6 @@ export function SettingsScreen({
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }

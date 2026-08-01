@@ -53,7 +53,7 @@ export function TeamBuilderScreen({
 	}
 
 	return (
-		<>
+		<div className="device-book device-book--open device-book--stacked">
 			<div className="device device-page device-page--left">
 				<div className="device-top">
 					<div className="device-lens-big" />
@@ -215,6 +215,6 @@ export function TeamBuilderScreen({
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { getGenerationSprite } from "../../constants/spriteVersions"
+import { useMobileMasterDetail } from "../../hooks/useMobileMasterDetail"
 import { PokemonDatasheet } from "./PokemonDatasheet"
 
 export function FavoritesScreen({
@@ -14,15 +15,17 @@ export function FavoritesScreen({
 }) {
 	const [selected, setSelected] = useState(null)
 
+	const { isMobile, dataView, goToDetail, goToList } = useMobileMasterDetail()
+
 	useEffect(() => {
-		if (!selected && favorites.length > 0) {
+		if (!selected && favorites.length > 0 && !isMobile) {
 			setSelected(favorites[0])
 			return
 		}
 		if (selected && !favorites.some((pokemon) => pokemon.name === selected.name)) {
 			setSelected(favorites[0] ?? null)
 		}
-	}, [favorites, selected])
+	}, [favorites, selected, isMobile])
 
 	async function selectVariety(name) {
 		const detail = await fetchByName(name)
@@ -30,7 +33,7 @@ export function FavoritesScreen({
 	}
 
 	return (
-		<>
+		<div className="device-book device-book--open" data-view={dataView}>
 			<div className="device device-page device-page--left">
 				<div className="device-top">
 					<div className="device-lens-big" />
@@ -54,7 +57,10 @@ export function FavoritesScreen({
 								className={`device-pokemon-list-item${
 									pokemon.id === selected?.id ? " selected" : ""
 								}`}
-								onClick={() => setSelected(pokemon)}
+								onClick={() => {
+										setSelected(pokemon)
+										goToDetail()
+									}}
 							>
 								<img
 									src={getGenerationSprite(pokemon, spriteGame, { useOriginGeneration })}
@@ -69,6 +75,16 @@ export function FavoritesScreen({
 			</div>
 
 			<div className="device device-page device-page--right">
+				{isMobile && (
+					<div className="device-mobile-detail-nav">
+						<button className="device-back-button device-back-to-list" onClick={goToList}>
+							← Voltar
+						</button>
+						<button className="device-back-to-menu" onClick={onBackToMenu}>
+							Menu
+						</button>
+					</div>
+				)}
 				<div className="device-panel device-panel--info">
 					{!selected ? (
 						<p className="device-empty-hint">Selecione um favorito</p>
@@ -85,6 +101,6 @@ export function FavoritesScreen({
 					)}
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }

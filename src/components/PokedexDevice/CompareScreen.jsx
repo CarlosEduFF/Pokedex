@@ -3,6 +3,7 @@ import { typeColours } from "../../constants/typeColours"
 import { usePokemonSearch } from "../../hooks/usePokemonSearch"
 import { getTypeMatchups } from "../../constants/typeEffectiveness"
 import { getGenerationSprite } from "../../constants/spriteVersions"
+import { useMobileMasterDetail } from "../../hooks/useMobileMasterDetail"
 
 function ComparisonColumn({ pokemon, spriteGame, useOriginGeneration }) {
 	if (!pokemon) {
@@ -89,6 +90,8 @@ export function CompareScreen({
 
 	const results = usePokemonSearch(query, pokemonRefs, pokemons, fetchByName)
 
+	const { isMobile, dataView, goToDetail, goToList } = useMobileMasterDetail()
+
 	function handleListScroll(event) {
 		const { scrollTop, scrollHeight, clientHeight } = event.target
 		if (scrollHeight - scrollTop - clientHeight < 80) {
@@ -107,10 +110,12 @@ export function CompareScreen({
 		}
 		if (!pokemonA) {
 			setPokemonA(pokemon)
+			goToDetail()
 			return
 		}
 		if (!pokemonB) {
 			setPokemonB(pokemon)
+			goToDetail()
 			return
 		}
 		setPokemonA(pokemonB)
@@ -118,7 +123,7 @@ export function CompareScreen({
 	}
 
 	return (
-		<>
+		<div className="device-book device-book--open" data-view={dataView}>
 			<div className="device device-page device-page--left">
 				<div className="device-top">
 					<div className="device-lens-big" />
@@ -174,6 +179,16 @@ export function CompareScreen({
 			</div>
 
 			<div className="device device-page device-page--right">
+				{isMobile && (
+					<div className="device-mobile-detail-nav">
+						<button className="device-back-button device-back-to-list" onClick={goToList}>
+							← Voltar
+						</button>
+						<button className="device-back-to-menu" onClick={onBackToMenu}>
+							Menu
+						</button>
+					</div>
+				)}
 				<div className="device-panel device-panel--info">
 					<div className="device-compare-columns">
 						<ComparisonColumn
@@ -189,6 +204,6 @@ export function CompareScreen({
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }
