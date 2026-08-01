@@ -4,8 +4,9 @@ import { usePokemonSearch } from "../../hooks/usePokemonSearch"
 import { useMoveDetails } from "../../hooks/useMoveDetails"
 import { useGamePokedex } from "../../hooks/useGamePokedex"
 import { useGameFilteredPokemons } from "../../hooks/useGameFilteredPokemons"
-import { getGenerationSprite, spriteVersionGames } from "../../constants/spriteVersions"
+import { getGenerationSprite } from "../../constants/spriteVersions"
 import { PokemonDatasheet } from "./PokemonDatasheet"
+import { FilterModal } from "./FilterModal"
 
 const ALL_TYPES = Object.keys(typeColours)
 
@@ -30,8 +31,9 @@ export function PokedexScreen({
 	const [query, setQuery] = useState("")
 	const [expandedMove, setExpandedMove] = useState(null)
 	const [gameFilter, setGameFilter] = useState("")
-	const [typeFilters, setTypeFilters] = useState([])
-	const [typeMatchMode, setTypeMatchMode] = useState("any")
+	const [typeFilter1, setTypeFilter1] = useState("")
+	const [typeFilter2, setTypeFilter2] = useState("")
+	const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
 
 	const searchResults = usePokemonSearch(query, pokemonRefs, pokemons, fetchByName)
 	const { speciesIds: gameSpeciesIds, isLoading: isGameLoading } = useGamePokedex(gameFilter)
@@ -42,21 +44,18 @@ export function PokedexScreen({
 	const baseList = gameFilter ? gameFilteredPokemons : searchResults
 
 	const visiblePokemons = useMemo(() => {
-		if (typeFilters.length === 0) return baseList
+		if (!typeFilter1 && !typeFilter2) return baseList
 
 		return baseList.filter((pokemon) => {
 			const pokemonTypes = pokemon.types.map((t) => t.type.name)
-			return typeMatchMode === "all"
-				? typeFilters.every((type) => pokemonTypes.includes(type))
-				: typeFilters.some((type) => pokemonTypes.includes(type))
+			return (
+				(!typeFilter1 || pokemonTypes.includes(typeFilter1)) &&
+				(!typeFilter2 || pokemonTypes.includes(typeFilter2))
+			)
 		})
-	}, [baseList, typeFilters, typeMatchMode])
+	}, [baseList, typeFilter1, typeFilter2])
 
-	function toggleTypeFilter(type) {
-		setTypeFilters((current) =>
-			current.includes(type) ? current.filter((t) => t !== type) : [...current, type]
-		)
-	}
+	const activeFilterCount = (gameFilter ? 1 : 0) + (typeFilter1 ? 1 : 0) + (typeFilter2 ? 1 : 0)
 
 	const { moveDetails, loadMoveDetail } = useMoveDetails()
 
@@ -156,50 +155,12 @@ export function PokedexScreen({
 						onClick={(event) => event.stopPropagation()}
 					/>
 
-					<select
-						className="device-version-select"
-						value={gameFilter}
-						onChange={(event) => setGameFilter(event.target.value)}
+					<button
+						className="device-filter-open-button"
+						onClick={() => setIsFilterModalOpen(true)}
 					>
-						<option value="">Todos os jogos</option>
-						{spriteVersionGames.map((option) => (
-							<option key={option.value} value={option.versionSlug}>
-								{option.label}
-							</option>
-						))}
-					</select>
-
-					<div className="device-type-filters">
-						{ALL_TYPES.map((type) => (
-							<button
-								key={type}
-								className={`device-type-filter-button${
-									typeFilters.includes(type) ? " active" : ""
-								}`}
-								style={typeFilters.includes(type) ? { background: typeColours[type] } : undefined}
-								onClick={() => toggleTypeFilter(type)}
-							>
-								{type}
-							</button>
-						))}
-					</div>
-
-					{typeFilters.length > 1 && (
-						<div className="device-method-filters">
-							<button
-								className={`device-method-filter-button${typeMatchMode === "any" ? " active" : ""}`}
-								onClick={() => setTypeMatchMode("any")}
-							>
-								Qualquer tipo
-							</button>
-							<button
-								className={`device-method-filter-button${typeMatchMode === "all" ? " active" : ""}`}
-								onClick={() => setTypeMatchMode("all")}
-							>
-								Todos os tipos
-							</button>
-						</div>
-					)}
+						Filtros{activeFilterCount > 0 ? ` (${activeFilterCount})` : ""}
+					</button>
 
 					<ul className="device-pokemon-list" onScroll={handleListScroll}>
 						{visiblePokemons.map((pokemon) => (
@@ -229,11 +190,24 @@ export function PokedexScreen({
 
 						{!isGameFilterLoading &&
 							visiblePokemons.length === 0 &&
-							(query || gameFilter || typeFilters.length > 0) && (
+							(query || gameFilter || typeFilter1 || typeFilter2) && (
 								<li className="device-empty-hint">Nenhum pokémon encontrado para este filtro</li>
 							)}
 					</ul>
 				</div>
+
+				{isFilterModalOpen && (
+					<FilterModal
+						allTypes={ALL_TYPES}
+						gameFilter={gameFilter}
+						setGameFilter={setGameFilter}
+						typeFilter1={typeFilter1}
+						setTypeFilter1={setTypeFilter1}
+						typeFilter2={typeFilter2}
+						setTypeFilter2={setTypeFilter2}
+						onClose={() => setIsFilterModalOpen(false)}
+					/>
+				)}
 			</div>
 
 			<div className="device device-page device-page--right">
