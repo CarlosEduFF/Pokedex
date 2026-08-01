@@ -34,6 +34,46 @@
 	opacity: 0.9;
 }
 
+/* CLOSED MENU (cover screen) */
+
+.device-menu {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	width: 100%;
+	padding: 0 32px;
+}
+
+.device-menu-item {
+	padding: 14px 16px;
+	border-radius: 8px;
+	background: rgba(255, 255, 255, 0.15);
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background 0.15s ease;
+}
+
+.device-menu-item:hover {
+	background: rgba(255, 255, 255, 0.3);
+}
+
+.device-back-to-menu {
+	align-self: flex-start;
+	margin-bottom: 8px;
+	padding: 4px 10px;
+	border-radius: 4px;
+	background: #663399;
+	color: white;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.device-back-to-menu:hover {
+	background: #4e2479;
+}
+
 .device-book {
 	display: flex;
 }
@@ -193,6 +233,7 @@
 }
 
 .device-pokemon-list-item {
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -276,6 +317,31 @@
 .device-shiny-toggle.active {
 	background: #f7d02c;
 	color: #2b2b2b;
+}
+
+.device-cry-button {
+	padding: 4px 10px;
+	border-radius: 4px;
+	background: rgba(255, 255, 255, 0.15);
+	color: white;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.device-cry-button:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+.device-favorite-toggle {
+	font-size: 20px;
+	line-height: 1;
+	color: #667a66;
+	cursor: pointer;
+}
+
+.device-favorite-toggle.active {
+	color: #f7d02c;
 }
 
 .device-view-toggle-button {
@@ -431,6 +497,27 @@
 .device-method-filter-button.active {
 	background: #663399;
 	color: white;
+}
+
+.device-type-filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.device-type-filter-button {
+	padding: 3px 8px;
+	border-radius: 4px;
+	background: white;
+	color: #2b2b2b;
+	font-size: 11px;
+	text-transform: capitalize;
+	cursor: pointer;
+}
+
+.device-type-filter-button.active {
+	color: white;
+	font-weight: bold;
 }
 
 .device-moves-list {
@@ -795,4 +882,229 @@
 	height: 100%;
 	background: #663399;
 	border-radius: 3px;
+}
+
+/* TEAM BUILDER */
+
+.device-team-screen {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.device-team-selector {
+	display: flex;
+	gap: 6px;
+}
+
+.device-team-selector .device-version-select {
+	flex: 1;
+}
+
+.device-team-selector-button {
+	padding: 6px 10px;
+	border-radius: 4px;
+	background: #663399;
+	color: white;
+	font-size: 12px;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.device-team-selector-button:hover {
+	background: #4e2479;
+}
+
+.device-team-selector-button--danger {
+	background: #a83232;
+}
+
+.device-team-selector-button--danger:hover {
+	background: #832626;
+}
+
+.device-team-selector-button:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+.device-team-meta {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.device-team-slots {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.device-team-slot {
+	background: white;
+	border-radius: 6px;
+	padding: 8px 10px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.device-team-slot-sprite {
+	width: 40px;
+	height: 40px;
+	image-rendering: pixelated;
+}
+
+.device-team-slot-name {
+	font-size: 13px;
+	text-transform: capitalize;
+	color: #2b2b2b;
+	flex: 1;
+	min-width: 80px;
+}
+
+.device-team-slot-remove {
+	padding: 4px 8px;
+	border-radius: 4px;
+	background: #a83232;
+	color: white;
+	font-size: 11px;
+	cursor: pointer;
+}
+
+.device-team-slot-remove:hover {
+	background: #832626;
+}
+
+.device-team-coverage {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+/* COMPARE */
+
+.device-compare-badge {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #663399;
+	color: white;
+	font-size: 10px;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.device-compare-columns {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+	height: 100%;
+}
+
+.device-compare-column {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	min-width: 0;
+}
+
+.device-compare-column--empty {
+	align-items: center;
+	justify-content: center;
+}
+
+.device-compare-sprite {
+	width: 80px;
+	height: 80px;
+	align-self: center;
+	image-rendering: pixelated;
+}
+
+/* SETTINGS */
+
+.device-settings-summary {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.device-settings-screen {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.device-settings-option {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	background: white;
+	border-radius: 6px;
+	padding: 12px;
+}
+
+.device-settings-option--stacked {
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.device-settings-option--disabled {
+	opacity: 0.5;
+}
+
+.device-settings-option-text {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.device-toggle {
+	position: relative;
+	display: inline-block;
+	flex-shrink: 0;
+}
+
+.device-toggle input {
+	position: absolute;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	cursor: pointer;
+}
+
+.device-toggle-track {
+	display: block;
+	width: 44px;
+	height: 24px;
+	border-radius: 12px;
+	background: #ccc;
+	transition: background 0.15s ease;
+}
+
+.device-toggle input:checked + .device-toggle-track {
+	background: #663399;
+}
+
+.device-toggle-thumb {
+	display: block;
+	width: 18px;
+	height: 18px;
+	margin: 3px;
+	border-radius: 50%;
+	background: white;
+	transition: transform 0.15s ease;
+}
+
+.device-toggle input:checked + .device-toggle-track .device-toggle-thumb {
+	transform: translateX(20px);
 }
